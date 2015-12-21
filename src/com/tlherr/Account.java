@@ -29,23 +29,27 @@ public abstract class Account {
     private int withdrawls = 0;
 
 
-    public Account(User owner, double balance, double interestRate, double transactionFee)
+    public Account(User owner, double balance, double interestRate, double creditLimit, double transactionFee)
     {
         this.owner = owner;
         this.accountBalance = balance;
         this.interestRate = interestRate;
+        this.creditLimit = creditLimit;
         this.transactionFee = transactionFee;
     }
 
-    public Transaction deposit(double amount)
+    final public Transaction deposit(double amount)
     {
+        this.accountBalance += this.calculateInterest(amount);
+
+        //To make things simple interest is just calculated per transaction vs a compound period
         this.deposits++;
         this.accountBalance+=amount;
 
         return new Transaction(this.owner, "deposit", amount, this.accountBalance, "OK");
     }
 
-    public Transaction withdraw(double amount)
+    final public Transaction withdraw(double amount)
     {
 
         //Check if the account is frozen, it not proceed
@@ -82,8 +86,11 @@ public abstract class Account {
         }
     }
 
+    //Allow subclasses to determine how interest is calculated
+    abstract public double calculateInterest(double amount);
+
     //Take a fee each transaction
-    public boolean processFee()
+    final public boolean processFee()
     {
         double remaining = this.accountBalance - this.transactionFee;
         if(remaining > 0) {
@@ -106,8 +113,7 @@ public abstract class Account {
 
     }
 
-
-    public void addTransaction(Transaction transaction) {
+    final public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction.getRecord());
     }
 
