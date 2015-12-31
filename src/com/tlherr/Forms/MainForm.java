@@ -7,37 +7,61 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Created by tom on 2015-12-21.
- */
-public class MainForm extends JFrame {
+public class MainForm {
 
+    private JFrame mainFrame;
     private DefaultListModel<Object> users = new DefaultListModel<Object>();
 
     private JPanel panel;
     private JList userList;
+
     private JButton newUserButton;
     private JButton deleteUserButton;
 
     public MainForm() {
-        JFrame frame = this;
+        prepareUI();
+    }
+
+    /**
+     * Create the UI this form needs
+     */
+    public void prepareUI()
+    {
+        mainFrame = new JFrame();
         panel.setPreferredSize(new Dimension(400, 300));
-        setContentPane(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-
-        //Setup Event Handlers
-
-        newUserButton.addActionListener(new NewUserEvent("Click", MouseEvent.BUTTON1));
+        mainFrame.setContentPane(panel);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.pack();
     }
 
-    public void addUser(User user) {
-        this.users.addElement(user);
+    public void showUI()
+    {
+        mainFrame.setVisible(true);
+
+        //Add event handlers
+        newUserButton.addActionListener(new AddUserButtonClickListener());
+    }
+
+    public void hideUI()
+    {
+        mainFrame.setVisible(false);
+
+        //Remove event handlers
+        for( ActionListener al : newUserButton.getActionListeners() ) {
+            newUserButton.removeActionListener( al );
+        }
     }
 
 
-    public JPanel getPanel() {
-        return panel;
+    private class AddUserButtonClickListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+
+            NewUserForm newUserForm = new NewUserForm();
+
+            newUserForm.showUI();
+        }
     }
+
 
 }

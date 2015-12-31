@@ -2,21 +2,40 @@ package com.tlherr.Forms;
 
 import javax.swing.*;
 
-/**
- * Created by tom on 2015-12-21.
- */
 public class NewUserForm {
+
+    private JFrame frame;
     private JPanel newUserPanel;
     private JLabel firstNameLabel;
     private JTextField firstNameTextField;
     private JLabel lastNameLabel;
     private JTextField lastNameTextField;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Create A New User");
-        frame.setContentPane(new NewUserForm().newUserPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    public NewUserForm() {
+        System.out.println("NewUserForm Constructor");
+        prepareUI();
     }
+
+    public void prepareUI()
+    {
+        System.out.println("Preparing UI for NewUserForm");
+        this.frame = new JFrame("Create A New User");
+        this.frame.setContentPane(this.newUserPanel);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.pack();
+    }
+
+    public void showUI()
+    {
+        System.out.println("Showing NewUserForm UI");
+        this.frame.setVisible(true);
+    }
+
+    public void hideUI()
+    {
+        System.out.println("Hiding NewUserForm UI");
+        this.frame.setVisible(false);
+    }
+
+
 }

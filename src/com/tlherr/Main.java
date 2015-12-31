@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         //GUI
-        JFrame mainForm = new MainForm();
-        mainForm.setVisible(true);
+        MainForm mainForm = new MainForm();
+        mainForm.showUI();
     }
 }
