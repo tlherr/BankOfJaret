@@ -21,7 +21,6 @@ public class AddNewUserEvent extends AbstractAction {
         NewUserForm form = new NewUserForm();
 
 
-        System.out.println("Derp");
         //This function needs to initialize a new user class and tell the Main form to update the UI
     }
 }

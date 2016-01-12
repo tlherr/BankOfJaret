@@ -1,6 +1,8 @@
 package com.tlherr.Forms;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NewUserForm {
 
@@ -10,10 +12,24 @@ public class NewUserForm {
     private JTextField firstNameTextField;
     private JLabel lastNameLabel;
     private JTextField lastNameTextField;
+    private JButton okButton;
 
     public NewUserForm() {
         System.out.println("NewUserForm Constructor");
         prepareUI();
+
+
+        okButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                //Create a new user
+
+                //Add this user to the UI via a manager
+
+                //Close this dialog
+            }
+        });
     }
 
     public void prepareUI()
