@@ -2,9 +2,6 @@ package com.tlherr;
 
 import java.util.ArrayList;
 
-/**
- * Created by tom on 2015-12-21.
- */
 public abstract class Account {
 
     //Who has permission to edit, add, remove funds etc

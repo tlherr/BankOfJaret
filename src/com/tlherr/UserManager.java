@@ -21,6 +21,22 @@ public class UserManager extends EventDispatcher {
         notifyObservers("NEW_USER",user);
     }
 
+    public void removeUser(User user) {
+        System.out.println("Usermanager added user");
+        this.users.remove(user);
+        setChanged();
+        notifyObservers("DELETED_USER", user);
+    }
+
+    public User getUserById(int index) {
+        try {
+            User user = this.users.get(index);
+            return user;
+        } catch(IndexOutOfBoundsException ex) {
+            return null;
+        }
+    }
+
     public List<User> getUsers() {
         return this.users;
     }

@@ -2,10 +2,7 @@ package com.tlherr.Forms;
 
 import com.tlherr.Events.EventConsumer;
 import com.tlherr.Events.EventDispatcher;
-import com.tlherr.Listeners.AddUserButtonClickListener;
-import com.tlherr.Listeners.ChequingAccountRadioSelectListener;
-import com.tlherr.Listeners.LoginUserButtonClickListener;
-import com.tlherr.Listeners.SavingsAccountRadioSelectListener;
+import com.tlherr.Listeners.*;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
@@ -79,7 +76,6 @@ public class MainForm {
 
     }
 
-
     /**
      * Create the UI this form needs
      */
@@ -99,6 +95,8 @@ public class MainForm {
         //Add event handlers
         newUserButton.addActionListener(new AddUserButtonClickListener(userManager));
         loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList));
+        deleteUserButton.addActionListener(new DeleteUserButtonClickListener(userManager, userList));
+
         chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager));
         savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager));
     }
