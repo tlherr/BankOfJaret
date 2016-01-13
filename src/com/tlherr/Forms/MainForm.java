@@ -2,6 +2,7 @@ package com.tlherr.Forms;
 
 import com.tlherr.Events.*;
 import com.tlherr.User;
+import com.tlherr.UserManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.*;
 public class MainForm {
 
     private JFrame mainFrame;
-    private DefaultListModel<Object> users = new DefaultListModel<Object>();
+    public UserManager userManager;
 
     private JPanel panel;
     private JList userList;
@@ -32,6 +33,12 @@ public class MainForm {
         mainFrame.setContentPane(panel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
+
+        userManager = new UserManager();
+
+        //Listen here for new user event
+
+        //Update UI when a user is added
     }
 
     public void showUI()
@@ -53,13 +60,14 @@ public class MainForm {
     }
 
 
-    private class AddUserButtonClickListener implements ActionListener{
+    private class AddUserButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
 
-            NewUserForm newUserForm = new NewUserForm();
+            NewUserForm newUserForm = new NewUserForm(userManager);
 
             newUserForm.showUI();
+
         }
     }
 

@@ -1,26 +1,18 @@
 package com.tlherr.Events;
 
-import com.tlherr.Forms.NewUserForm;
+import java.util.EventObject;
+import com.tlherr.User;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+public class AddNewUserEvent extends EventObject {
 
-public class AddNewUserEvent extends AbstractAction {
-    JFrame baseFrame;
+    private User user;
 
-    public AddNewUserEvent(String name, Integer mnemonic) {
-        super(name);
-        putValue(MNEMONIC_KEY, mnemonic);
-        this.baseFrame = baseFrame;
+    public AddNewUserEvent(Object source, User user) {
+        super(source);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("button pressed");
-
-        NewUserForm form = new NewUserForm();
-
-
-        //This function needs to initialize a new user class and tell the Main form to update the UI
+    public User getUser()
+    {
+        return this.user;
     }
 }

@@ -10,9 +10,19 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private String password;
+    private String address;
+    private String email;
+    //Change to cal style datefield
     private int age;
 
     //Types of accounts
+
+    public User(String firstName, String lastName) {
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+    }
+
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;
