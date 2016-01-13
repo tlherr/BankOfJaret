@@ -58,6 +58,16 @@ public class MainForm {
                         savingsAccountRadioButton.setEnabled(true);
                         newTransactionButton.setEnabled(true);
                     break;
+
+                case "DELETED_USER":
+
+                    break;
+
+                case "REMOVED_CURRENT_USER":
+                        chequingAccountRadioButton.setEnabled(false);
+                        savingsAccountRadioButton.setEnabled(false);
+                        newTransactionButton.setEnabled(false);
+                    break;
             }
         }
     }
