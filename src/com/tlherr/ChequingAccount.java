@@ -6,6 +6,7 @@ package com.tlherr;
 public class ChequingAccount extends Account implements AccountInterface {
 
 
+    //Chequing accounts should have overdraft protection
     public ChequingAccount(User owner, double balance, double interestRate, double creditLimit, double transactionFee) {
         super(owner, balance, interestRate, creditLimit, transactionFee);
     }

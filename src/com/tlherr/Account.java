@@ -1,6 +1,6 @@
 package com.tlherr;
 
-import javax.swing.DefaultListModel;
+import java.util.ArrayList;
 
 /**
  * Created by tom on 2015-12-21.
@@ -24,7 +24,7 @@ public abstract class Account {
 
     private User owner;
 
-    private DefaultListModel<Object> transactions = new DefaultListModel<Object>();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
     private int deposits = 0;
     private int withdrawls = 0;
 
@@ -114,7 +114,7 @@ public abstract class Account {
     }
 
     final public void addTransaction(Transaction transaction) {
-        this.transactions.addElement(transaction.getRecord());
+        this.transactions.add(transaction);
     }
 
     public Object getTransactions() {

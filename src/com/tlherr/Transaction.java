@@ -31,7 +31,7 @@ public class Transaction {
     public Object getRecord() {
         Object[] arr = new Object[6];
         arr[0] = this.id;
-        arr[1] = this.user.getFullName();
+        arr[1] = this.user.toString();
         arr[2] = this.accountStatus;
         arr[3] = this.operation;
         arr[4] = this.input;
