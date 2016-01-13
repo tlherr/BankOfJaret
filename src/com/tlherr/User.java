@@ -23,11 +23,14 @@ public class User {
         this.setLastName(lastName);
     }
 
+    @Override
+    public String toString() {
+        return lastName + ", " + firstName;
+    }
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
-
 
     public String getFirstName() {
         return firstName;

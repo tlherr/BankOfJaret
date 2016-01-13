@@ -7,6 +7,8 @@ import com.tlherr.UserManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 
 public class MainForm {
 
@@ -15,12 +17,30 @@ public class MainForm {
 
     private JPanel panel;
     private JList userList;
+    private DefaultListModel userModel;
 
     private JButton newUserButton;
     private JButton deleteUserButton;
 
     public MainForm() {
         prepareUI();
+    }
+
+
+    private class UserObserver implements Observer {
+        /**
+         * This method is called whenever the observed object is changed. An
+         * application calls an <tt>Observable</tt> object's
+         * <code>notifyObservers</code> method to have all the object's
+         * observers notified of the change.
+         *
+         * @param o   the observable object.
+         * @param arg an argument passed to the <code>notifyObservers</code>
+         */
+        @Override
+        public void update(Observable o, Object arg) {
+            userModel.addElement(arg.toString());
+        }
     }
 
     /**
@@ -34,7 +54,14 @@ public class MainForm {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
 
+        userModel = new DefaultListModel();
+        userList.setModel(userModel);
+
+
         userManager = new UserManager();
+
+        UserObserver observer = new UserObserver();
+        userManager.addObserver(observer);
 
         //Listen here for new user event
 
@@ -58,7 +85,6 @@ public class MainForm {
             newUserButton.removeActionListener( al );
         }
     }
-
 
     private class AddUserButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
