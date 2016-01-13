@@ -8,6 +8,7 @@ import java.util.Observable;
 public class UserManager extends Observable {
 
     private ArrayList<User> users;
+    private User currentUser;
 
     public UserManager() {
         users = new ArrayList<>();
@@ -24,4 +25,11 @@ public class UserManager extends Observable {
         return this.users;
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 }

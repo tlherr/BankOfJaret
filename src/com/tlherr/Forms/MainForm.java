@@ -1,10 +1,10 @@
 package com.tlherr.Forms;
 
 import com.tlherr.Events.*;
-import com.tlherr.User;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
@@ -21,9 +21,20 @@ public class MainForm {
 
     private JButton newUserButton;
     private JButton deleteUserButton;
+    private JButton loginUserButton;
+    private JLabel loggedInLabel;
 
     public MainForm() {
         prepareUI();
+
+        userModel = new DefaultListModel();
+        userList.setModel(userModel);
+
+        userManager = new UserManager();
+
+        UserObserver observer = new UserObserver();
+        userManager.addObserver(observer);
+
     }
 
 
@@ -53,19 +64,6 @@ public class MainForm {
         mainFrame.setContentPane(panel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
-
-        userModel = new DefaultListModel();
-        userList.setModel(userModel);
-
-
-        userManager = new UserManager();
-
-        UserObserver observer = new UserObserver();
-        userManager.addObserver(observer);
-
-        //Listen here for new user event
-
-        //Update UI when a user is added
     }
 
     public void showUI()
@@ -73,7 +71,8 @@ public class MainForm {
         mainFrame.setVisible(true);
 
         //Add event handlers
-        newUserButton.addActionListener(new AddUserButtonClickListener());
+        newUserButton.addActionListener(new AddUserButtonClickListener(userManager));
+        loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList));
     }
 
     public void hideUI()
@@ -84,18 +83,9 @@ public class MainForm {
         for( ActionListener al : newUserButton.getActionListeners() ) {
             newUserButton.removeActionListener( al );
         }
-    }
 
-    private class AddUserButtonClickListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            String command = e.getActionCommand();
-
-            NewUserForm newUserForm = new NewUserForm(userManager);
-
-            newUserForm.showUI();
-
+        for( ListSelectionListener al : userList.getListSelectionListeners() ) {
+            userList.removeListSelectionListener( al );
         }
     }
-
-
 }
