@@ -1,4 +1,4 @@
-package com.tlherr.Events;
+package com.tlherr.Listeners;
 
 import com.tlherr.Forms.NewUserForm;
 import com.tlherr.UserManager;

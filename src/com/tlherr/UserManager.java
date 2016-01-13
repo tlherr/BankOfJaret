@@ -1,11 +1,11 @@
 package com.tlherr;
 
-import java.awt.event.ActionEvent;
+import com.tlherr.Events.EventDispatcher;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-public class UserManager extends Observable {
+public class UserManager extends EventDispatcher {
 
     private ArrayList<User> users;
     private User currentUser;
@@ -18,7 +18,7 @@ public class UserManager extends Observable {
         System.out.println("Usermanager added user");
         this.users.add(user);
         setChanged();
-        notifyObservers(user);
+        notifyObservers("NEW_USER",user);
     }
 
     public List<User> getUsers() {
@@ -27,6 +27,22 @@ public class UserManager extends Observable {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public boolean authenticateUser(char[] password, int index) {
+        User user = this.users.get(index);
+
+        String enteredPassword = String.valueOf(password);
+        String userPassword = user.getPassword();
+
+        if(userPassword.equals(enteredPassword)) {
+            this.setCurrentUser(user);
+            setChanged();
+            notifyObservers("SET_CURRENT_USER",user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setCurrentUser(User currentUser) {

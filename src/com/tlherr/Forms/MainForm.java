@@ -1,6 +1,11 @@
 package com.tlherr.Forms;
 
-import com.tlherr.Events.*;
+import com.tlherr.Events.EventConsumer;
+import com.tlherr.Events.EventDispatcher;
+import com.tlherr.Listeners.AddUserButtonClickListener;
+import com.tlherr.Listeners.ChequingAccountRadioSelectListener;
+import com.tlherr.Listeners.LoginUserButtonClickListener;
+import com.tlherr.Listeners.SavingsAccountRadioSelectListener;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
@@ -8,7 +13,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
-import java.util.Observer;
 
 public class MainForm {
 
@@ -23,6 +27,44 @@ public class MainForm {
     private JButton deleteUserButton;
     private JButton loginUserButton;
     private JLabel loggedInLabel;
+    private JLabel accountTypeLabel;
+    private JRadioButton chequingAccountRadioButton;
+    private JRadioButton savingsAccountRadioButton;
+    private JTextField balanceTextField;
+    private JLabel balanceLabel;
+    private JButton newTransactionButton;
+
+    private class UserObserver implements EventConsumer {
+
+        /**
+         * This method is called whenever the observed object is changed. An
+         * application calls an <tt>Observable</tt> object's
+         * <code>notifyObservers</code> method to have all the object's
+         * observers notified of the change.
+         *
+         * @param o     the observable object.
+         * @param event
+         * @param arg   an argument passed to the <code>notifyObservers</code>
+         */
+        @Override
+        public void update(EventDispatcher o, String event, Object arg) {
+
+            switch(event) {
+                case "NEW_USER":
+                        userModel.addElement(arg.toString());
+                    break;
+
+                case "SET_CURRENT_USER":
+                        loggedInLabel.setText("Logged In As: "+arg.toString());
+                        //Enable form controls
+                        chequingAccountRadioButton.setEnabled(true);
+                        savingsAccountRadioButton.setEnabled(true);
+                        newTransactionButton.setEnabled(true);
+
+                    break;
+            }
+        }
+    }
 
     public MainForm() {
         prepareUI();
@@ -37,22 +79,6 @@ public class MainForm {
 
     }
 
-
-    private class UserObserver implements Observer {
-        /**
-         * This method is called whenever the observed object is changed. An
-         * application calls an <tt>Observable</tt> object's
-         * <code>notifyObservers</code> method to have all the object's
-         * observers notified of the change.
-         *
-         * @param o   the observable object.
-         * @param arg an argument passed to the <code>notifyObservers</code>
-         */
-        @Override
-        public void update(Observable o, Object arg) {
-            userModel.addElement(arg.toString());
-        }
-    }
 
     /**
      * Create the UI this form needs
@@ -73,6 +99,8 @@ public class MainForm {
         //Add event handlers
         newUserButton.addActionListener(new AddUserButtonClickListener(userManager));
         loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList));
+        chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager));
+        savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager));
     }
 
     public void hideUI()

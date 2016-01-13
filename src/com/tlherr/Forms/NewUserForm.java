@@ -18,6 +18,10 @@ public class NewUserForm {
     private JLabel lastNameLabel;
     private JTextField lastNameTextField;
     private JButton okButton;
+    private JPasswordField userPasswordField;
+    private JLabel passwordFieldLabel;
+    private JLabel emailFieldLabel;
+    private JTextField emailTextField;
 
 
     public NewUserForm(UserManager userManager) {
@@ -31,7 +35,7 @@ public class NewUserForm {
                 //Have some error checking to make sure fields are not blank
 
                 //Create a new user
-                User user = new User(firstNameTextField.getText(), lastNameTextField.getText());
+                User user = new User(firstNameTextField.getText(), lastNameTextField.getText(), userPasswordField.getPassword(), emailTextField.getText());
 
                 //Add this user to the UI via a manager
                 userManager.addUser(user);
