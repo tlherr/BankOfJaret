@@ -57,7 +57,6 @@ public class MainForm {
                         chequingAccountRadioButton.setEnabled(true);
                         savingsAccountRadioButton.setEnabled(true);
                         newTransactionButton.setEnabled(true);
-
                     break;
             }
         }

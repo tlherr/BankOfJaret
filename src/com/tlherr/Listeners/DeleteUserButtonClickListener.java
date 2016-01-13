@@ -34,6 +34,11 @@ public class DeleteUserButtonClickListener implements ActionListener {
             User user = userManager.getUserById(index);
 
             if(user!=null) {
+                //Make sure the user you are removing is not the currently active user that is logged in
+                if(userManager.getCurrentUser().equals(user)) {
+                    userManager.removeCurrentUser();
+                }
+
                 userManager.removeUser(user);
                 ((DefaultListModel) userList.getModel()).remove(index);
             }

@@ -64,4 +64,10 @@ public class UserManager extends EventDispatcher {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+
+    public void removeCurrentUser() {
+        this.currentUser = null;
+        setChanged();
+        notifyObservers("REMOVED_CURRENT_USER", null);
+    }
 }
