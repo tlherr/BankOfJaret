@@ -32,6 +32,7 @@ public class MainForm {
     private JLabel balanceLabel;
     private JButton newTransactionButton;
     private JButton transactionHistoryButton;
+    private JButton logoutButton;
 
     private class UserObserver implements EventConsumer {
 
@@ -94,7 +95,6 @@ public class MainForm {
         mainFrame = new JFrame();
         panel.setPreferredSize(new Dimension(500, 400));
         mainFrame.setContentPane(panel);
-        mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
     }
