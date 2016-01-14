@@ -28,16 +28,8 @@ public class Transaction {
         this.result = result;
     }
 
-    public Object getRecord() {
-        Object[] arr = new Object[6];
-        arr[0] = this.id;
-        arr[1] = this.user.toString();
-        arr[2] = this.accountStatus;
-        arr[3] = this.operation;
-        arr[4] = this.input;
-        arr[5] = this.result;
-
-        return arr;
+    public String toString() {
+        return "Account Status: "+this.accountStatus+" Transaction ID: "+this.id+" Operation: "+this.operation+" Result (Balance):"+this.result+" User:"+this.user.toString();
     }
 
 }

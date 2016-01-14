@@ -32,6 +32,7 @@ public class User {
 
         this.chequingAccount = new ChequingAccount(this, 0.00, 0.02, 10000, 2.00);
         this.savingsAccount = new SavingsAccount(this, 0.00, 0.05, 5000, 5.00);
+        this.activeAccount = null;
     }
 
     public Account getActiveAccount() {

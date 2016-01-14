@@ -37,9 +37,6 @@ public abstract class Account {
 
     final public Transaction deposit(double amount)
     {
-        this.accountBalance += this.calculateInterest(amount);
-
-        //To make things simple interest is just calculated per transaction vs a compound period
         this.deposits++;
         this.accountBalance+=amount;
 

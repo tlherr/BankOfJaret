@@ -3,6 +3,7 @@ package com.tlherr.Forms;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class LoginForm extends JDialog {
@@ -52,7 +53,7 @@ public class LoginForm extends JDialog {
         //Check the password entered vs the one that has been stored
 
         //If they match "login" the user - note this is plaintext hanging around in memory so very much so not secure
-        if(userManager.authenticateUser(userPasswordField.getPassword(),selectedUserIndex)) {
+        if (userManager.authenticateUser(userPasswordField.getPassword(), selectedUserIndex)) {
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Incorrect Password");
@@ -64,4 +65,5 @@ public class LoginForm extends JDialog {
 // add your code here if necessary
         dispose();
     }
+
 }

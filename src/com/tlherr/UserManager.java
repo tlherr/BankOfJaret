@@ -12,6 +12,7 @@ public class UserManager extends EventDispatcher {
 
     public UserManager() {
         users = new ArrayList<>();
+        currentUser = null;
     }
 
     public void addUser(User user) {

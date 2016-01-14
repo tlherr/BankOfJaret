@@ -6,6 +6,7 @@ import com.tlherr.Listeners.*;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
@@ -46,17 +47,17 @@ public class MainForm {
         @Override
         public void update(EventDispatcher o, String event, Object arg) {
 
-            switch(event) {
+            switch (event) {
                 case "NEW_USER":
-                        userModel.addElement(arg.toString());
+                    userModel.addElement(arg.toString());
                     break;
 
                 case "SET_CURRENT_USER":
-                        loggedInLabel.setText("Logged In As: "+arg.toString());
-                        //Enable form controls
-                        chequingAccountRadioButton.setEnabled(true);
-                        savingsAccountRadioButton.setEnabled(true);
-                        newTransactionButton.setEnabled(true);
+                    loggedInLabel.setText("Logged In As: " + arg.toString());
+                    //Enable form controls
+                    chequingAccountRadioButton.setEnabled(true);
+                    savingsAccountRadioButton.setEnabled(true);
+                    newTransactionButton.setEnabled(true);
                     break;
 
                 case "DELETED_USER":
@@ -64,9 +65,9 @@ public class MainForm {
                     break;
 
                 case "REMOVED_CURRENT_USER":
-                        chequingAccountRadioButton.setEnabled(false);
-                        savingsAccountRadioButton.setEnabled(false);
-                        newTransactionButton.setEnabled(false);
+                    chequingAccountRadioButton.setEnabled(false);
+                    savingsAccountRadioButton.setEnabled(false);
+                    newTransactionButton.setEnabled(false);
                     break;
             }
         }
@@ -88,8 +89,7 @@ public class MainForm {
     /**
      * Create the UI this form needs
      */
-    public void prepareUI()
-    {
+    public void prepareUI() {
         mainFrame = new JFrame();
         panel.setPreferredSize(new Dimension(400, 300));
         mainFrame.setContentPane(panel);
@@ -97,8 +97,7 @@ public class MainForm {
         mainFrame.pack();
     }
 
-    public void showUI()
-    {
+    public void showUI() {
         mainFrame.setVisible(true);
 
         //Add event handlers
@@ -108,19 +107,19 @@ public class MainForm {
 
         chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager));
         savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager));
+        newTransactionButton.addActionListener(new NewTransactionButtonClickListener(userManager, balanceTextField));
     }
 
-    public void hideUI()
-    {
+    public void hideUI() {
         mainFrame.setVisible(false);
 
         //Remove event handlers
-        for( ActionListener al : newUserButton.getActionListeners() ) {
-            newUserButton.removeActionListener( al );
+        for (ActionListener al : newUserButton.getActionListeners()) {
+            newUserButton.removeActionListener(al);
         }
 
-        for( ListSelectionListener al : userList.getListSelectionListeners() ) {
-            userList.removeListSelectionListener( al );
+        for (ListSelectionListener al : userList.getListSelectionListeners()) {
+            userList.removeListSelectionListener(al);
         }
     }
 }

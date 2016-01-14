@@ -3,6 +3,8 @@ package com.tlherr.Forms;
 import com.tlherr.UserManager;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -28,10 +30,8 @@ public class NewUserForm {
         System.out.println("NewUserForm Constructor");
         prepareUI();
 
-        okButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 //Have some error checking to make sure fields are not blank
 
                 //Create a new user
@@ -48,8 +48,7 @@ public class NewUserForm {
     }
 
 
-    public void prepareUI()
-    {
+    public void prepareUI() {
         System.out.println("Preparing UI for NewUserForm");
         this.frame = new JFrame("Create A New User");
         this.frame.setContentPane(this.newUserPanel);
@@ -57,14 +56,12 @@ public class NewUserForm {
         this.frame.pack();
     }
 
-    public void showUI()
-    {
+    public void showUI() {
         System.out.println("Showing NewUserForm UI");
         this.frame.setVisible(true);
     }
 
-    public void hideUI()
-    {
+    public void hideUI() {
         System.out.println("Hiding NewUserForm UI");
         this.frame.setVisible(false);
     }
