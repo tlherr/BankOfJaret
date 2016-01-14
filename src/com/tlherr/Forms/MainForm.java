@@ -31,6 +31,7 @@ public class MainForm {
     private JTextField balanceTextField;
     private JLabel balanceLabel;
     private JButton newTransactionButton;
+    private JButton transactionHistoryButton;
 
     private class UserObserver implements EventConsumer {
 
@@ -91,8 +92,9 @@ public class MainForm {
      */
     public void prepareUI() {
         mainFrame = new JFrame();
-        panel.setPreferredSize(new Dimension(400, 300));
+        panel.setPreferredSize(new Dimension(500, 400));
         mainFrame.setContentPane(panel);
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
     }

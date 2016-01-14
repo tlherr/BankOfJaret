@@ -17,7 +17,9 @@ public class SavingsAccount extends Account {
      */
     @Override
     public Transaction deposit(double amount) {
-        return null;
+        this.deposits++;
+        this.accountBalance+=amount;
+        return new Transaction(this.owner, "deposit", amount, this.accountBalance, "OK");
     }
 
     /**
@@ -28,7 +30,37 @@ public class SavingsAccount extends Account {
      */
     @Override
     public Transaction withdraw(double amount) {
-        return null;
+        if(!this.isFrozen) {
+            double remaining = this.accountBalance - amount;
+
+            if(remaining <= 0.00) {
+                //The user is attempting to withdraw more then they have
+                if(this.overdraftProtection) {
+
+                    //Check to see if the new balance exceeds the established credit limit
+                    if(remaining < -this.creditLimit) {
+                        //User is exceeding overdraft protections, do not process the transaction
+                        return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                    } else {
+                        this.setFrozen(true);
+                        this.accountBalance = remaining;
+                        this.withdrawls++;
+                        return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Overdraft Protection Active");
+                    }
+                } else {
+                    //No overdraft protection means no withdraw
+                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                }
+            } else {
+                //The user is withdrawing an acceptable amount
+                this.accountBalance = remaining;
+                this.withdrawls++;
+                return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "OK");
+            }
+
+        } else {
+            return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Error: Account Frozen");
+        }
     }
 
     /**
@@ -39,7 +71,14 @@ public class SavingsAccount extends Account {
      */
     @Override
     public double calculateInterest(double amount) {
-        return 0;
+        //Get the interest rate, apply it to amount given and return the result
+        if(amount>0.00) {
+            double interestRate = this.getInterestRate();
+
+            return (interestRate * amount);
+        } else {
+            return 0.00;
+        }
     }
 
     /**
@@ -50,8 +89,9 @@ public class SavingsAccount extends Account {
      */
     @Override
     public double calculateFee(Transaction transaction) {
-        return 0;
-    }
+        //Get the fee rate
 
+        return transaction.getResult()*this.getInterestRate();
+    }
 
 }
