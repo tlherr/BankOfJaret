@@ -4,28 +4,32 @@ import java.util.ArrayList;
 
 public abstract class Account {
 
-    //Who has permission to edit, add, remove funds etc
+    /**
+     * Instance Variables
+     */
+    protected double interestRate;
+    protected double annualInterest;
+    protected double minimumBalance;
+    protected double maximumBalance;
+    protected double accountBalance;
+    protected boolean overdraftProtection;
+    protected boolean isFrozen;
+    protected double transactionFee;
+    protected double creditLimit;
+    protected User owner;
+    protected ArrayList<Transaction> transactions = new ArrayList<>();
+    protected int deposits = 0;
+    protected int withdrawls = 0;
 
-    //Monthly fee
-    //Array of transactions
-    private double interestRate;
-    private double annualInterest;
-    private double minimumBalance;
-    private double maximumBalance;
-    private double accountBalance;
-    private boolean overdraftProtection;
-    private boolean isFrozen;
-    private double transactionFee;
-
-    private double creditLimit;
-
-    private User owner;
-
-    private ArrayList<Transaction> transactions = new ArrayList<>();
-    private int deposits = 0;
-    private int withdrawls = 0;
-
-
+    /**
+     * Class constructor
+     *
+     * @param owner
+     * @param balance
+     * @param interestRate
+     * @param creditLimit
+     * @param transactionFee
+     */
     public Account(User owner, double balance, double interestRate, double creditLimit, double transactionFee)
     {
         this.owner = owner;
@@ -35,82 +39,52 @@ public abstract class Account {
         this.transactionFee = transactionFee;
     }
 
-    final public Transaction deposit(double amount)
-    {
-        this.deposits++;
-        this.accountBalance+=amount;
+    /**
+     * Perform a deposit action, return a Transaction object that describes the actions performed
+     *
+     * @param amount
+     * @return Transaction
+     */
+    abstract public Transaction deposit(double amount);
 
-        return new Transaction(this.owner, "deposit", amount, this.accountBalance, "OK");
-    }
+    /**
+     * Perform a withdraw action, return a Transaction object that describes the actions performed
+     *
+     * @param amount
+     * @return Transaction
+     */
+    abstract public Transaction withdraw(double amount);
 
-    final public Transaction withdraw(double amount)
-    {
-
-        //Check if the account is frozen, it not proceed
-        if(!this.isFrozen) {
-            double remaining = this.accountBalance - amount;
-
-            //If a user is attempting to withdraw more money then they have
-            if(remaining <= 0)
-            {
-                if(this.overdraftProtection && !(remaining < -this.creditLimit)) {
-                    //If they have overdraft protection, allow the account to go negative as long as it does not surpass
-                    //the credit limit
-                    //Freeze the account until a deposit had been made that pays back the credit
-                    this.setFrozen(true);
-                    this.processFee();
-                    this.accountBalance = remaining;
-                    this.withdrawls++;
-
-                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Overdraft Protection Active");
-                } else {
-                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
-                }
-            } else {
-                if(this.processFee()) {
-                    this.accountBalance = remaining;
-                    this.withdrawls++;
-                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "OK");
-                } else {
-                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Unable to process fee (Account Frozen)");
-                }
-            }
-        } else {
-            return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Error: Account Frozen");
-        }
-    }
-
-    //Allow subclasses to determine how interest is calculated
+    /**
+     * Calculate Interest based on the account balance
+     *
+     * @param amount
+     * @return double
+     */
     abstract public double calculateInterest(double amount);
 
-    //Take a fee each transaction
-    final public boolean processFee()
-    {
-        double remaining = this.accountBalance - this.transactionFee;
-        if(remaining > 0) {
-            //Process the fee and return true
-            this.accountBalance = remaining;
-            return true;
-        } else {
-            //User did not have enough money and cant actually afford the fee
+    /**
+     * Calculate a fee for a given transaction
+     *
+     * @param transaction
+     * @return double
+     */
+    abstract public double calculateFee(Transaction transaction);
 
-            //If the user has overdraft protection process the transaction anyways
-            if(this.isOverdraftProtection()) {
-                this.accountBalance = remaining;
-                return true;
-            } else {
-                //Freeze the account so no other transactions can happen
-                this.setFrozen(true);
-                return false;
-            }
-        }
-
-    }
-
+    /**
+     * Add a transaction to the storage array
+     *
+     * @param transaction
+     */
     final public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
     }
 
+    /**
+     * Get an ArrayList of all transactions this account has processed
+     *
+     * @return ArrayList
+     */
     public Object getTransactions() {
         return transactions;
     }

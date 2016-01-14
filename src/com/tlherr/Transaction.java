@@ -32,4 +32,8 @@ public class Transaction {
         return "Account Status: "+this.accountStatus+" Transaction ID: "+this.id+" Operation: "+this.operation+" Result (Balance):"+this.result+" User:"+this.user.toString();
     }
 
+    public double getResult() {
+        return this.result;
+    }
+
 }
