@@ -21,7 +21,11 @@ public class ChequingAccount extends Account {
     public Transaction deposit(double amount) {
         this.deposits++;
         this.accountBalance+=amount;
-        return new Transaction(this.owner, "deposit", amount, this.accountBalance, "OK");
+        Transaction transaction = new Transaction(this.owner, "deposit", amount, this.accountBalance, "OK");
+
+        this.addTransaction(transaction);
+
+        return transaction;
     }
 
     /**
@@ -42,26 +46,41 @@ public class ChequingAccount extends Account {
                     //Check to see if the new balance exceeds the established credit limit
                     if(remaining < -this.creditLimit) {
                         //User is exceeding overdraft protections, do not process the transaction
-                        return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                        Transaction transaction = new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                        this.addTransaction(transaction);
+
+                        return transaction;
                     } else {
                         this.setFrozen(true);
                         this.accountBalance = remaining;
                         this.withdrawls++;
-                        return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Overdraft Protection Active");
+                        Transaction transaction = new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Overdraft Protection Active");
+                        this.addTransaction(transaction);
+
+                        return transaction;
                     }
                 } else {
                     //No overdraft protection means no withdraw
-                    return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                    Transaction transaction = new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Warning: Insufficient Funds/Credit");
+                    this.addTransaction(transaction);
+
+                    return transaction;
                 }
             } else {
                 //The user is withdrawing an acceptable amount
                 this.accountBalance = remaining;
                 this.withdrawls++;
-                return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "OK");
+                Transaction transaction = new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "OK");
+                this.addTransaction(transaction);
+
+                return transaction;
             }
 
         } else {
-            return new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Error: Account Frozen");
+            Transaction transaction = new Transaction(this.owner, "withdrawl", amount, this.accountBalance, "Error: Account Frozen");
+            this.addTransaction(transaction);
+
+            return transaction;
         }
     }
 

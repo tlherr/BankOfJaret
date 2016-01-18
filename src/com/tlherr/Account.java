@@ -85,7 +85,7 @@ public abstract class Account {
      *
      * @return ArrayList
      */
-    public Object getTransactions() {
+    public ArrayList getTransactions() {
         return transactions;
     }
 

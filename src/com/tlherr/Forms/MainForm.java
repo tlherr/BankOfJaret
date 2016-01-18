@@ -107,9 +107,10 @@ public class MainForm {
         loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList));
         deleteUserButton.addActionListener(new DeleteUserButtonClickListener(userManager, userList));
 
-        chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager));
-        savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager));
+        chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager, savingsAccountRadioButton));
+        savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager, chequingAccountRadioButton));
         newTransactionButton.addActionListener(new NewTransactionButtonClickListener(userManager, balanceTextField));
+        transactionHistoryButton.addActionListener(new TransactionHistoryRadioButtonClickListener(userManager));
     }
 
     public void hideUI() {
