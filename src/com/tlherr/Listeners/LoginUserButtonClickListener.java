@@ -11,10 +11,12 @@ public class LoginUserButtonClickListener implements ActionListener {
 
     private UserManager userManager;
     private JList userList;
+    private JButton logoutButton;
 
-    public LoginUserButtonClickListener(UserManager manager, JList list) {
+    public LoginUserButtonClickListener(UserManager manager, JList list, JButton button) {
         userManager = manager;
         userList = list;
+        logoutButton = button;
     }
 
     public void actionPerformed(ActionEvent e) {

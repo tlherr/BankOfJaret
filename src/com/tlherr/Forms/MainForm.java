@@ -60,6 +60,7 @@ public class MainForm {
                     chequingAccountRadioButton.setEnabled(true);
                     savingsAccountRadioButton.setEnabled(true);
                     newTransactionButton.setEnabled(true);
+                    logoutButton.setEnabled(true);
                     break;
 
                 case "DELETED_USER":
@@ -70,6 +71,8 @@ public class MainForm {
                     chequingAccountRadioButton.setEnabled(false);
                     savingsAccountRadioButton.setEnabled(false);
                     newTransactionButton.setEnabled(false);
+                    logoutButton.setEnabled(false);
+                    balanceTextField.setText("");
                     break;
             }
         }
@@ -104,13 +107,15 @@ public class MainForm {
 
         //Add event handlers
         newUserButton.addActionListener(new AddUserButtonClickListener(userManager));
-        loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList));
+        loginUserButton.addActionListener(new LoginUserButtonClickListener(userManager, userList, logoutButton));
+        logoutButton.addActionListener(new LogoutUserButtonClickListener(userManager));
         deleteUserButton.addActionListener(new DeleteUserButtonClickListener(userManager, userList));
 
         chequingAccountRadioButton.addActionListener(new ChequingAccountRadioSelectListener(userManager, savingsAccountRadioButton));
         savingsAccountRadioButton.addActionListener(new SavingsAccountRadioSelectListener(userManager, chequingAccountRadioButton));
         newTransactionButton.addActionListener(new NewTransactionButtonClickListener(userManager, balanceTextField));
         transactionHistoryButton.addActionListener(new TransactionHistoryRadioButtonClickListener(userManager));
+
     }
 
     public void hideUI() {
